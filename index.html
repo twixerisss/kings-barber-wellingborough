@@ -7,699 +7,271 @@
     <meta name="description" content="King's Barber Wellingborough - Traditional Turkish barbering with luxury service. Hot towel shaves, precision fades, beard grooming at 33 Market Street.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --gold: #C9A84C;
-            --gold-light: #e0c97a;
-            --black: #0a0a0a;
-            --cream: #F5F0E1;
-            --brown: #2C1810;
-            --brown-light: #3d2418;
+            --primary: #C9A84C;
+            --primary-light: #e0c97a;
+            --primary-dark: #9A7B0A;
+            --primary-rgb: 201,168,76;
+            --bg: #09090b; --bg-raised: #111113; --bg-card: rgba(255,255,255,0.03); --bg-card-hover: rgba(255,255,255,0.06); --bg-glass: rgba(255,255,255,0.04);
+            --text: #fafafa; --text-secondary: #a1a1aa; --text-muted: #71717a;
+            --border: rgba(255,255,255,0.06); --border-strong: rgba(255,255,255,0.1); --border-accent: rgba(var(--primary-rgb), 0.2);
+            --radius: 12px; --radius-sm: 8px; --radius-lg: 16px; --radius-xl: 24px;
         }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--black);
-            color: var(--cream);
-            font-family: 'Inter', sans-serif;
-            font-weight: 300;
-            line-height: 1.7;
-            overflow-x: hidden;
-            cursor: none;
-        }
-
-        /* Custom cursor */
-        .cursor {
-            width: 16px;
-            height: 16px;
-            border: 2px solid var(--gold);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-            transition: transform 0.15s ease, background 0.15s ease;
-            transform: translate(-50%, -50%);
-        }
-        .cursor.hover {
-            transform: translate(-50%, -50%) scale(2);
-            background: rgba(201, 168, 76, 0.15);
-        }
-        @media (pointer: coarse) {
-            .cursor { display: none; }
-            body { cursor: auto; }
-        }
-
-        /* Typography */
-        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
-        .gold-text {
-            background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        a {
-            color: var(--gold);
-            text-decoration: none;
-            position: relative;
-        }
-        a.underline-anim::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--gold);
-            transition: width 0.4s ease;
-        }
-        a.underline-anim:hover::after { width: 100%; }
-
-        /* Noise overlay */
-        .noise-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-            background-repeat: repeat;
-            background-size: 256px 256px;
-        }
-
-        /* ===== HERO: Split Screen ===== */
-        .hero {
-            height: 100vh;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            position: relative;
-        }
-        .hero-left {
-            background: var(--brown);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-        }
-        .hero-left h1 {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            font-size: 4rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
-        .hero-right {
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-right img {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            will-change: transform;
-        }
-        .hero-right::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to right, var(--brown) 0%, rgba(10,10,10,0.5) 40%, rgba(10,10,10,0.3) 100%);
-            z-index: 1;
-        }
-        .hero-cta {
-            position: absolute;
-            bottom: 15%;
-            right: 10%;
-            z-index: 2;
-            text-align: right;
-        }
-        .hero-cta p {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.3rem;
-            color: var(--cream);
-            margin-bottom: 1.5rem;
-        }
-        .btn-gold {
-            display: inline-block;
-            padding: 14px 40px;
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            font-size: 0.85rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            transition: all 0.4s ease;
-            background: transparent;
-            cursor: none;
-        }
-        .btn-gold:hover {
-            background: var(--gold);
-            color: var(--black);
-        }
-
-        /* ===== Gold Line Dividers ===== */
-        .gold-line {
-            height: 1px;
-            background: var(--gold);
-            margin: 0 auto;
-            transform-origin: left;
-            transform: scaleX(0);
-            transition: transform 1.2s ease;
-            max-width: 80%;
-        }
-        .gold-line.visible { transform: scaleX(1); }
-
-        /* ===== Section base ===== */
-        section { padding: 100px 5%; }
-        .section-title {
-            font-size: 2.8rem;
-            margin-bottom: 0.5rem;
-        }
-        .section-subtitle {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: rgba(245, 240, 225, 0.5);
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-        }
-
-        /* ===== SERVICES: Horizontal Scroll Carousel ===== */
-        .services-carousel {
-            display: flex;
-            gap: 30px;
-            overflow-x: auto;
-            padding: 20px 0 40px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-        .services-carousel::-webkit-scrollbar { display: none; }
-        .service-card {
-            min-width: 280px;
-            max-width: 280px;
-            background: var(--brown);
-            padding: 40px 30px;
-            border-left: 4px solid var(--gold);
-            scroll-snap-align: start;
-            transform-style: preserve-3d;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            perspective: 800px;
-        }
-        .service-card:hover {
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-        .service-card h3 {
-            font-size: 1.4rem;
-            color: var(--cream);
-            margin-bottom: 10px;
-        }
-        .service-card .price {
-            font-size: 2rem;
-            font-family: 'Playfair Display', serif;
-            color: var(--gold);
-        }
-        .service-card p {
-            color: rgba(245,240,225,0.6);
-            font-size: 0.9rem;
-            margin-top: 15px;
-        }
-
-        /* ===== STATS ===== */
-        .stats-section {
-            background: var(--brown);
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            text-align: center;
-        }
-        .stat-item .stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            color: var(--gold);
-        }
-        .stat-item .stat-label {
-            font-size: 0.85rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: rgba(245,240,225,0.6);
-            margin-top: 5px;
-        }
-
-        /* ===== REVIEWS: Single Large Testimonial Slider ===== */
-        .testimonial-slider {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            min-height: 250px;
-        }
-        .testimonial {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            text-align: center;
-        }
-        .testimonial.active { opacity: 1; }
-        .testimonial .quote-mark {
-            font-family: 'Playfair Display', serif;
-            font-size: 6rem;
-            color: var(--gold);
-            line-height: 1;
-            opacity: 0.4;
-        }
-        .testimonial blockquote {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.5rem;
-            color: var(--cream);
-            line-height: 1.8;
-            margin: -20px 0 20px;
-        }
-        .testimonial .author {
-            font-size: 0.9rem;
-            color: var(--gold);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-        .slider-dots {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 220px;
-        }
-        .slider-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            border: 1px solid var(--gold);
-            background: transparent;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .slider-dot.active { background: var(--gold); }
-
-        /* ===== GALLERY: Masonry ===== */
-        .masonry {
-            columns: 3;
-            column-gap: 20px;
-        }
-        .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-        .masonry-item img {
-            width: 100%;
-            display: block;
-            transition: transform 0.6s ease;
-        }
-        .masonry-item:hover img { transform: scale(1.05); }
-        .masonry-item::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(10,10,10,0.6) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        /* ===== CONTACT ===== */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 40px;
-            align-items: start;
-        }
-        .contact-card {
-            border: 2px solid var(--gold);
-            padding: 50px 40px;
-        }
-        .contact-card h3 {
-            font-size: 2rem;
-            margin-bottom: 25px;
-        }
-        .contact-card .info-line {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 18px;
-            font-size: 0.95rem;
-        }
-        .contact-card .info-line .label {
-            color: var(--gold);
-            font-weight: 500;
-            min-width: 70px;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            padding-top: 2px;
-        }
-        .contact-card .hours-grid {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 8px 20px;
-            margin-top: 25px;
-            font-size: 0.9rem;
-        }
-        .contact-card .hours-grid .day { color: var(--gold); font-weight: 500; }
-        .map-container {
-            width: 100%;
-            height: 100%;
-            min-height: 450px;
-        }
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            filter: grayscale(0.8) contrast(1.1);
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            text-align: center;
-            padding: 40px 5%;
-            border-top: 1px solid rgba(201,168,76,0.2);
-            font-size: 0.85rem;
-            color: rgba(245,240,225,0.4);
-        }
-        footer a { color: var(--gold); }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .masonry { columns: 2; }
-            .contact-grid { grid-template-columns: 1fr; }
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(9,9,11,0.6); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); }
+        .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; } .nav-logo span { color: var(--primary); }
+        .nav-links { display: flex; gap: 0.25rem; list-style: none; background: var(--bg-glass); border: 1px solid var(--border); border-radius: 100px; padding: 0.25rem; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; font-weight: 500; padding: 0.4rem 0.9rem; border-radius: 100px; transition: all 0.2s ease; }
+        .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+        .nav-cta { position: relative; display: inline-flex; align-items: center; gap: 0.4rem; background: var(--primary); color: #fff; padding: 0.5rem 1.2rem; border-radius: 100px; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: all 0.2s ease; overflow: hidden; }
+        .nav-cta::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%); pointer-events: none; }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.4); }
+        .menu-toggle { display: none; background: var(--bg-glass); border: 1px solid var(--border); color: var(--text); font-size: 1.1rem; cursor: pointer; width: 40px; height: 40px; border-radius: var(--radius-sm); align-items: center; justify-content: center; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 8rem 2rem 6rem; overflow: hidden; }
+        .hero-glow { position: absolute; top: -20%; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse at center, rgba(var(--primary-rgb), 0.12) 0%, transparent 70%); pointer-events: none; filter: blur(80px); }
+        .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%); }
+        .hero-content { text-align: center; position: relative; z-index: 2; max-width: 720px; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bg-glass); border: 1px solid var(--border); padding: 0.35rem 1rem 0.35rem 0.6rem; border-radius: 100px; font-size: 0.78rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 2rem; backdrop-filter: blur(12px); }
+        .hero-badge .pulse { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; position: relative; }
+        .hero-badge .pulse::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: rgba(34,197,94,0.3); animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0; transform: scale(2); } }
+        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.8rem, 6vw, 4.2rem); font-weight: 700; line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 1.5rem; }
+        .hero h1 .gradient { background: linear-gradient(135deg, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.1rem; color: var(--text-secondary); max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.7; }
+        .hero-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; font-size: 0.9rem; padding: 0.75rem 1.75rem; border-radius: 100px; text-decoration: none; transition: all 0.2s ease; border: none; cursor: pointer; position: relative; overflow: hidden; }
+        .btn-primary { background: var(--primary); color: #fff; } .btn-primary::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 50%); pointer-events: none; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(var(--primary-rgb), 0.35); }
+        .btn-ghost { background: var(--bg-glass); color: var(--text); border: 1px solid var(--border-strong); backdrop-filter: blur(8px); }
+        .btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
+        .stats-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .stat-item { text-align: center; padding: 2rem 1rem; border-right: 1px solid var(--border); } .stat-item:last-child { border-right: none; }
+        .stat-number { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; letter-spacing: -0.04em; color: var(--text); } .stat-number .accent { color: var(--primary); }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.25rem; font-weight: 500; }
+        section { padding: 6rem 2rem; } .container { max-width: 1100px; margin: 0 auto; }
+        .section-label { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--primary); font-weight: 600; margin-bottom: 1rem; }
+        .section-label::before { content: ''; width: 24px; height: 1px; background: var(--primary); }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
+        .section-desc { color: var(--text-secondary); font-size: 1rem; max-width: 540px; line-height: 1.7; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem; }
+        .about-image { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3; border: 1px solid var(--border); background: var(--bg-raised); }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; } .about-image:hover img { transform: scale(1.03); }
+        .about-text h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .about-text p { color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.7; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; margin-top: 3rem; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+        .service-card { background: var(--bg); padding: 2rem; transition: all 0.3s ease; position: relative; }
+        .service-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.06) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s ease; }
+        .service-card:hover::before { opacity: 1; } .service-card:hover { background: var(--bg-raised); }
+        .service-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(var(--primary-rgb), 0.1); border: 1px solid rgba(var(--primary-rgb), 0.15); border-radius: var(--radius-sm); font-size: 1.2rem; margin-bottom: 1.25rem; }
+        .service-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+        .service-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.65; }
+        .service-price { display: inline-flex; align-items: center; margin-top: 1rem; color: var(--primary); font-weight: 600; font-size: 0.85rem; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.5rem; margin-top: 3rem; }
+        .gallery-item { border-radius: var(--radius); overflow: hidden; aspect-ratio: 1; position: relative; background: var(--bg-raised); border: 1px solid var(--border); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; } .gallery-item:hover img { transform: scale(1.06); }
+        .gallery-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.5) 100%); pointer-events: none; opacity: 0; transition: opacity 0.3s ease; } .gallery-item:hover::after { opacity: 1; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; margin-top: 3rem; }
+        .review-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; backdrop-filter: blur(8px); transition: all 0.3s ease; }
+        .review-card:hover { border-color: var(--border-strong); background: var(--bg-card-hover); }
+        .review-stars { display: flex; gap: 2px; margin-bottom: 1rem; } .review-stars .star { color: #f59e0b; font-size: 0.9rem; }
+        .review-text { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.7; margin-bottom: 1.25rem; }
+        .review-author-row { display: flex; align-items: center; gap: 0.75rem; }
+        .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: rgba(var(--primary-rgb), 0.15); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.8rem; color: var(--primary); }
+        .review-author { font-weight: 600; font-size: 0.88rem; } .review-source { color: var(--text-muted); font-size: 0.75rem; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 3rem; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+        .contact-panel { background: var(--bg); padding: 2.5rem; }
+        .contact-panel h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+        .hours-table { width: 100%; border-collapse: collapse; } .hours-table tr { border-bottom: 1px solid var(--border); } .hours-table tr:last-child { border-bottom: none; }
+        .hours-table td { padding: 0.65rem 0; font-size: 0.88rem; } .hours-table td:first-child { font-weight: 500; color: var(--text); } .hours-table td:last-child { text-align: right; color: var(--text-secondary); }
+        .contact-info { display: flex; flex-direction: column; gap: 1.25rem; }
+        .contact-item { display: flex; align-items: center; gap: 1rem; }
+        .contact-icon { width: 44px; height: 44px; flex-shrink: 0; background: var(--bg-glass); border: 1px solid var(--border); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s ease; }
+        .contact-item:hover .contact-icon { border-color: var(--border-accent); background: rgba(var(--primary-rgb), 0.06); }
+        .contact-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+        .contact-value { font-weight: 500; font-size: 0.92rem; } .contact-value a { color: var(--text); text-decoration: none; transition: color 0.2s; } .contact-value a:hover { color: var(--primary); }
+        .map-container { margin-top: 2rem; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); height: 320px; }
+        .map-container iframe { width: 100%; height: 100%; border: 0; filter: invert(90%) hue-rotate(180deg) brightness(0.9) contrast(1.2) saturate(0.3); }
+        .cta-section { text-align: center; padding: 6rem 2rem; position: relative; overflow: hidden; }
+        .cta-glow { position: absolute; bottom: -40%; left: 50%; transform: translateX(-50%); width: 700px; height: 500px; background: radial-gradient(ellipse at center, rgba(var(--primary-rgb), 0.1) 0%, transparent 70%); pointer-events: none; filter: blur(80px); }
+        .cta-section .container { position: relative; z-index: 1; }
+        .cta-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
+        .cta-section p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2rem; max-width: 460px; margin-left: auto; margin-right: auto; }
+        footer { border-top: 1px solid var(--border); padding: 2rem; }
+        .footer-content { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; color: var(--text-secondary); }
+        .footer-links { display: flex; gap: 1.5rem; } .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; transition: color 0.2s; } .footer-links a:hover { color: var(--text); }
+        .footer-credit { color: var(--text-muted); font-size: 0.78rem; } .footer-credit a { color: var(--text-secondary); text-decoration: none; } .footer-credit a:hover { color: var(--primary); }
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
         @media (max-width: 768px) {
-            .hero {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto 1fr;
-            }
-            .hero-left {
-                padding: 40px 20px;
-            }
-            .hero-left h1 {
-                writing-mode: horizontal-tb;
-                font-size: 2.5rem;
-            }
-            .hero-right { min-height: 60vh; }
-            .hero-cta {
-                bottom: 10%;
-                right: 5%;
-                left: 5%;
-                text-align: center;
-            }
-            section { padding: 60px 5%; }
-            .section-title { font-size: 2rem; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; }
-            .stat-item .stat-number { font-size: 2.5rem; }
-            .masonry { columns: 1; }
-            .testimonial blockquote { font-size: 1.2rem; }
-            .contact-card { padding: 30px 25px; }
-            .map-container { min-height: 300px; }
+            .nav-links { display: none; } .menu-toggle { display: flex; }
+            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: calc(100% + 1px); left: 1rem; right: 1rem; background: rgba(17,17,19,0.95); backdrop-filter: blur(20px); padding: 0.75rem; border-radius: var(--radius); border: 1px solid var(--border); gap: 0.25rem; }
+            .nav-links.open a { padding: 0.65rem 1rem; border-radius: var(--radius-sm); }
+            .hero { padding: 7rem 1.5rem 4rem; } .hero h1 { font-size: clamp(2.2rem, 8vw, 3rem); }
+            .about-grid, .contact-grid { grid-template-columns: 1fr; }
+            .stat-item { border-right: none; border-bottom: 1px solid var(--border); } .stat-item:last-child { border-bottom: none; } .stats-strip { grid-template-columns: repeat(2, 1fr); }
+            .services-grid { grid-template-columns: 1fr; } .hero-buttons { flex-direction: column; align-items: center; } section { padding: 4rem 1.5rem; }
         }
+        @media (max-width: 480px) { .stats-strip { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
+    <nav>
+        <a href="#" class="nav-logo">King's <span>Barber</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="tel:01933551722" class="nav-cta">Call Now</a>
+        <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+    </nav>
 
-<div class="cursor" id="cursor"></div>
-<div class="noise-overlay"></div>
-
-<!-- HERO -->
-<section class="hero" id="home">
-    <div class="hero-left">
-        <h1 class="gold-text">King's Barber</h1>
-    </div>
-    <div class="hero-right">
-        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800" alt="Barbershop interior" id="hero-img">
-        <div class="hero-cta">
-            <p>Traditional Turkish Barbering<br>on Market Street, Wellingborough</p>
-            <a href="#services" class="btn-gold">View Our Services</a>
-        </div>
-    </div>
-</section>
-
-<div class="gold-line" data-animate></div>
-
-<!-- SERVICES -->
-<section id="services">
-    <h2 class="section-title gold-text">Our Services</h2>
-    <p class="section-subtitle">Crafted with precision, delivered with care</p>
-    <div class="services-carousel">
-        <div class="service-card" data-tilt>
-            <h3>Traditional Cut</h3>
-            <div class="price">£12</div>
-            <p>A classic gentlemen's cut tailored to your style, finished with precision.</p>
-        </div>
-        <div class="service-card" data-tilt>
-            <h3>Skin Fade</h3>
-            <div class="price">£15</div>
-            <p>Sharp, clean skin fades blended to perfection by our expert barbers.</p>
-        </div>
-        <div class="service-card" data-tilt>
-            <h3>Hot Towel Shave</h3>
-            <div class="price">£12</div>
-            <p>The ultimate relaxation — traditional Turkish hot towel straight razor shave.</p>
-        </div>
-        <div class="service-card" data-tilt>
-            <h3>Beard Trim</h3>
-            <div class="price">£8</div>
-            <p>Shape and sculpt your beard with meticulous attention to detail.</p>
-        </div>
-        <div class="service-card" data-tilt>
-            <h3>Cut + Shave Combo</h3>
-            <div class="price">£22</div>
-            <p>The complete King's experience — haircut and hot towel shave together.</p>
-        </div>
-        <div class="service-card" data-tilt>
-            <h3>Kids Cut</h3>
-            <div class="price">£8</div>
-            <p>Gentle, patient service for our youngest clients in a relaxed setting.</p>
-        </div>
-    </div>
-</section>
-
-<div class="gold-line" data-animate></div>
-
-<!-- STATS -->
-<section class="stats-section" id="about">
-    <div class="stats-grid">
-        <div class="stat-item">
-            <div class="stat-number" data-count="5">0</div>
-            <div class="stat-label">Years Experience</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number" data-count="1000" data-suffix="s">0</div>
-            <div class="stat-label">Happy Clients</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number" data-count="5">0</div>
-            <div class="stat-label">Star Rated</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number" data-count="7">0</div>
-            <div class="stat-label">Days Open</div>
-        </div>
-    </div>
-</section>
-
-<div class="gold-line" data-animate></div>
-
-<!-- REVIEWS -->
-<section id="reviews">
-    <h2 class="section-title gold-text">Client Words</h2>
-    <p class="section-subtitle">What our gentlemen have to say</p>
-    <div class="testimonial-slider">
-        <div class="testimonial active">
-            <div class="quote-mark">&ldquo;</div>
-            <blockquote>Friendliest barbers in Wellingborough. Always feel welcome the moment I walk in. My go-to spot for every cut — wouldn't go anywhere else.</blockquote>
-            <div class="author">— James R.</div>
-        </div>
-        <div class="testimonial">
-            <div class="quote-mark">&ldquo;</div>
-            <blockquote>Best fades in town, hands down. The attention to detail is incredible, and they always take the time to get it exactly right. Five stars every time.</blockquote>
-            <div class="author">— Daniel M.</div>
-        </div>
-        <div class="testimonial">
-            <div class="quote-mark">&ldquo;</div>
-            <blockquote>Had the hot towel shave for the first time — absolutely incredible experience. So relaxing and the finish was unbelievably smooth. Already booked my next one.</blockquote>
-            <div class="author">— Chris T.</div>
-        </div>
-    </div>
-    <div class="slider-dots">
-        <div class="slider-dot active" data-slide="0"></div>
-        <div class="slider-dot" data-slide="1"></div>
-        <div class="slider-dot" data-slide="2"></div>
-    </div>
-</section>
-
-<div class="gold-line" data-animate></div>
-
-<!-- GALLERY -->
-<section id="gallery">
-    <h2 class="section-title gold-text">The Gallery</h2>
-    <p class="section-subtitle">A glimpse inside King's Barber</p>
-    <div class="masonry">
-        <div class="masonry-item"><img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800" alt="Barber at work" loading="lazy"></div>
-        <div class="masonry-item"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800" alt="Hair styling" loading="lazy"></div>
-        <div class="masonry-item"><img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800" alt="Barbershop detail" loading="lazy"></div>
-        <div class="masonry-item"><img src="https://images.unsplash.com/photo-1585747860019-8c5e9d8c7a3a?w=800" alt="Classic barbering" loading="lazy"></div>
-        <div class="masonry-item"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800" alt="Barbershop atmosphere" loading="lazy"></div>
-    </div>
-</section>
-
-<div class="gold-line" data-animate></div>
-
-<!-- CONTACT -->
-<section id="contact">
-    <h2 class="section-title gold-text">Visit Us</h2>
-    <p class="section-subtitle">Walk in or call ahead</p>
-    <div class="contact-grid">
-        <div class="contact-card">
-            <h3 class="gold-text">King's Barber</h3>
-            <div class="info-line">
-                <span class="label">Address</span>
-                <span>33 Market Street, Wellingborough NN8 1AT</span>
-            </div>
-            <div class="info-line">
-                <span class="label">Phone</span>
-                <span><a href="tel:01933551722" class="underline-anim">01933 551722</a></span>
-            </div>
-            <div class="info-line">
-                <span class="label">Social</span>
-                <span><a href="https://www.facebook.com/kingsbarberwellingborough/" target="_blank" rel="noopener" class="underline-anim">Facebook</a></span>
-            </div>
-            <div class="hours-grid">
-                <span class="day">Mon — Wed</span><span>09:00 — 18:00</span>
-                <span class="day">Thu — Fri</span><span>09:00 — 19:00</span>
-                <span class="day">Saturday</span><span>08:00 — 18:00</span>
-                <span class="day">Sunday</span><span>10:00 — 16:00</span>
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge reveal"><span class="pulse"></span>Traditional Turkish Barbering</div>
+            <h1 class="reveal reveal-delay-1">Traditional Barbering at<br><span class="gradient">King's Barber</span></h1>
+            <p class="reveal reveal-delay-2">Traditional Turkish barbering on Market Street, Wellingborough. Premium cuts, hot towel shaves, and expert grooming. Open 7 days a week.</p>
+            <div class="hero-buttons reveal reveal-delay-3">
+                <a href="tel:01933551722" class="btn btn-primary">Call Now &rarr;</a>
+                <a href="#services" class="btn btn-ghost">View Services</a>
             </div>
         </div>
-        <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2446.5!2d-0.6939!3d52.3026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4877a1a0a0a0a0a%3A0x0!2s33+Market+Street%2C+Wellingborough+NN8+1AT!5e0!3m2!1sen!2suk!4v1" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+    </section>
+
+    <div class="stats-strip">
+        <div class="stat-item"><div class="stat-number">5<span class="accent">+</span></div><div class="stat-label">Years Experience</div></div>
+        <div class="stat-item"><div class="stat-number">1000<span class="accent">s+</span></div><div class="stat-label">Happy Clients</div></div>
+        <div class="stat-item"><div class="stat-number">5<span class="accent">&#9733;</span></div><div class="stat-label">Star Rated</div></div>
+        <div class="stat-item"><div class="stat-number">7</div><div class="stat-label">Days Open</div></div>
     </div>
-</section>
 
-<footer>
-    <p>&copy; 2026 King's Barber Wellingborough. <a href="https://twix.tf" target="_blank" rel="noopener" class="underline-anim">Built by Harry</a></p>
-</footer>
+    <section id="about">
+        <div class="container">
+            <span class="section-label reveal">About Us</span>
+            <div class="about-grid">
+                <div class="about-image reveal"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800" alt="King's Barber" loading="lazy"></div>
+                <div class="about-text reveal reveal-delay-1">
+                    <h3>Traditional Turkish Barbering</h3>
+                    <p>King's Barber on Market Street, Wellingborough offers the finest traditional Turkish barbering. With over 5 years of experience and thousands of happy clients, we deliver precision cuts and luxurious hot towel shaves.</p>
+                    <p>Open 7 days a week, we welcome walk-ins and appointments alike. Every visit is crafted with care and attention to detail.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<script>
-(function() {
-    // Custom cursor
-    const cursor = document.getElementById('cursor');
-    let mouseX = 0, mouseY = 0;
-    document.addEventListener('mousemove', e => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
-    });
-    document.querySelectorAll('a, button, .btn-gold, .service-card, .slider-dot').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
+    <section id="services">
+        <div class="container">
+            <span class="section-label reveal">What We Offer</span>
+            <h2 class="section-title reveal reveal-delay-1">Our Services</h2>
+            <p class="section-desc reveal reveal-delay-2">Crafted with precision, delivered with care.</p>
+            <div class="services-grid reveal reveal-delay-3">
+                <div class="service-card"><div class="service-icon">&#9986;</div><h3>Traditional Cut</h3><p>A classic gentlemen's cut tailored to your style, finished with precision.</p><div class="service-price">&pound;12</div></div>
+                <div class="service-card"><div class="service-icon">&#10024;</div><h3>Skin Fade</h3><p>Sharp, clean skin fades blended to perfection by our expert barbers.</p><div class="service-price">&pound;15</div></div>
+                <div class="service-card"><div class="service-icon">&#9832;</div><h3>Hot Towel Shave</h3><p>The ultimate relaxation &mdash; traditional Turkish hot towel straight razor shave.</p><div class="service-price">&pound;12</div></div>
+                <div class="service-card"><div class="service-icon">&#9998;</div><h3>Beard Trim</h3><p>Shape and sculpt your beard with meticulous attention to detail.</p><div class="service-price">&pound;8</div></div>
+                <div class="service-card"><div class="service-icon">&#9733;</div><h3>Cut + Shave Combo</h3><p>The complete King's experience &mdash; haircut and hot towel shave together.</p><div class="service-price">&pound;22</div></div>
+                <div class="service-card"><div class="service-icon">&#128103;</div><h3>Kids Cut</h3><p>Gentle, patient service for our youngest clients in a relaxed setting.</p><div class="service-price">&pound;8</div></div>
+            </div>
+        </div>
+    </section>
 
-    // Parallax hero image
-    const heroImg = document.getElementById('hero-img');
-    window.addEventListener('scroll', () => {
-        const scrollY = window.pageYOffset;
-        if (scrollY < window.innerHeight) {
-            heroImg.style.transform = 'translateY(' + (scrollY * 0.5) + 'px)';
-        }
-    });
+    <section id="gallery">
+        <div class="container">
+            <span class="section-label reveal">Our Work</span>
+            <h2 class="section-title reveal reveal-delay-1">Gallery</h2>
+            <div class="gallery-grid reveal reveal-delay-2">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800" alt="Barber at work" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800" alt="Hair styling" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800" alt="Barbershop detail" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1585747860019-8c5e9d8c7a3a?w=800" alt="Classic barbering" loading="lazy"></div>
+            </div>
+        </div>
+    </section>
 
-    // Gold line animations
-    const goldLines = document.querySelectorAll('.gold-line[data-animate]');
-    const lineObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.5 });
-    goldLines.forEach(line => lineObserver.observe(line));
+    <section id="reviews">
+        <div class="container">
+            <span class="section-label reveal">Testimonials</span>
+            <h2 class="section-title reveal reveal-delay-1">What Our Customers Say</h2>
+            <div class="reviews-grid reveal reveal-delay-2">
+                <div class="review-card">
+                    <div class="review-stars"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+                    <p class="review-text">Friendliest barbers in Wellingborough. Always feel welcome the moment I walk in. My go-to spot for every cut &mdash; wouldn't go anywhere else.</p>
+                    <div class="review-author-row"><div class="review-avatar">JR</div><div><div class="review-author">&mdash; James R.</div><div class="review-source">Google Review</div></div></div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+                    <p class="review-text">Best fades in town, hands down. The attention to detail is incredible, and they always take the time to get it exactly right. Five stars every time.</p>
+                    <div class="review-author-row"><div class="review-avatar">DM</div><div><div class="review-author">&mdash; Daniel M.</div><div class="review-source">Google Review</div></div></div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></div>
+                    <p class="review-text">Had the hot towel shave for the first time &mdash; absolutely incredible experience. So relaxing and the finish was unbelievably smooth. Already booked my next one.</p>
+                    <div class="review-author-row"><div class="review-avatar">CT</div><div><div class="review-author">&mdash; Chris T.</div><div class="review-source">Google Review</div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    // Stats counter animation
-    const statNumbers = document.querySelectorAll('.stat-number[data-count]');
-    const counterObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target;
-                const target = parseInt(el.dataset.count);
-                const suffix = el.dataset.suffix || '';
-                let current = 0;
-                const step = Math.max(1, Math.floor(target / 40));
-                const interval = setInterval(() => {
-                    current += step;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(interval);
-                    }
-                    el.textContent = current + (suffix ? '+' : '');
-                    if (suffix && current === target) el.textContent = current + suffix + '+';
-                }, 30);
-                counterObserver.unobserve(el);
-            }
-        });
-    }, { threshold: 0.5 });
-    statNumbers.forEach(el => counterObserver.observe(el));
+    <section id="contact">
+        <div class="container">
+            <span class="section-label reveal">Get In Touch</span>
+            <h2 class="section-title reveal reveal-delay-1">Contact &amp; Hours</h2>
+            <div class="contact-grid reveal reveal-delay-2">
+                <div class="contact-panel">
+                    <h3>Opening Hours</h3>
+                    <table class="hours-table">
+                        <tr><td>Mon &mdash; Wed</td><td>09:00 &mdash; 18:00</td></tr>
+                        <tr><td>Thu &mdash; Fri</td><td>09:00 &mdash; 19:00</td></tr>
+                        <tr><td>Saturday</td><td>08:00 &mdash; 18:00</td></tr>
+                        <tr><td>Sunday</td><td>10:00 &mdash; 16:00</td></tr>
+                    </table>
+                </div>
+                <div class="contact-panel">
+                    <h3>Find Us</h3>
+                    <div class="contact-info">
+                        <div class="contact-item"><div class="contact-icon">&#9906;</div><div><div class="contact-label">Address</div><div class="contact-value">33 Market Street, Wellingborough NN8 1AT</div></div></div>
+                        <div class="contact-item"><div class="contact-icon">&#9742;</div><div><div class="contact-label">Phone</div><div class="contact-value"><a href="tel:01933551722">01933 551722</a></div></div></div>
+                        <div class="contact-item"><div class="contact-icon">&#128240;</div><div><div class="contact-label">Social</div><div class="contact-value"><a href="https://www.facebook.com/kingsbarberwellingborough/" target="_blank" rel="noopener">Facebook</a></div></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="map-container reveal reveal-delay-3">
+                <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=King's+Barber+33+Market+Street+Wellingborough" allowfullscreen loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
 
-    // Testimonial slider
-    const testimonials = document.querySelectorAll('.testimonial');
-    const dots = document.querySelectorAll('.slider-dot');
-    let currentSlide = 0;
-    function showSlide(index) {
-        testimonials.forEach(t => t.classList.remove('active'));
-        dots.forEach(d => d.classList.remove('active'));
-        testimonials[index].classList.add('active');
-        dots[index].classList.add('active');
-        currentSlide = index;
-    }
-    dots.forEach(dot => {
-        dot.addEventListener('click', () => showSlide(parseInt(dot.dataset.slide)));
-    });
-    setInterval(() => {
-        showSlide((currentSlide + 1) % testimonials.length);
-    }, 5000);
+    <section class="cta-section">
+        <div class="cta-glow"></div>
+        <div class="container">
+            <h2 class="reveal">Ready for a Fresh Cut?</h2>
+            <p class="reveal reveal-delay-1">Visit King's Barber on Market Street for the finest Turkish barbering in Wellingborough.</p>
+            <a href="tel:01933551722" class="btn btn-primary reveal reveal-delay-2">Call Now &rarr;</a>
+        </div>
+    </section>
 
-    // Service card tilt effect
-    document.querySelectorAll('[data-tilt]').forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / centerY * -8;
-            const rotateY = (x - centerX) / centerX * 8;
-            card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
-        });
-    });
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">King's Barber</span>
+            <div class="footer-links"><a href="#about">About</a><a href="#services">Services</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a></div>
+            <span class="footer-credit">Built by <a href="https://twix.tf" target="_blank">Harry</a></span>
+        </div>
+    </footer>
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', e => {
-            e.preventDefault();
-            const target = document.querySelector(link.getAttribute('href'));
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-})();
-</script>
+    <script>
+        const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', function(e) { e.preventDefault(); const t = document.querySelector(this.getAttribute('href')); if (t) { t.scrollIntoView({ behavior: 'smooth' }); document.getElementById('navLinks').classList.remove('open'); } }); });
+    </script>
 </body>
 </html>
